@@ -2,11 +2,10 @@ import os
 from langchain_openai import ChatOpenAI
 from src.prompts import NARRATIVE_CHAT_TEMPLATE
 
-def get_llm(model_name: str = "gpt-4.1-nano", temperature: float = 0.0):
+def get_llm(model_name: str = "gpt-4.1-nano", temperature: float = 0.0, api_key: str = None):
     """Initializes and returns the ChatOpenAI model."""
-    api_key = os.environ.get("OPENAI_API_KEY")
     if not api_key:
-        raise ValueError("OPENAI_API_KEY environment variable is not set.")
+        raise ValueError("OpenAI API key is required.")
     
     return ChatOpenAI(
         model=model_name,

@@ -56,6 +56,9 @@ with st.sidebar:
     st.session_state.theme_mode = st.radio("Theme Mode", ["Light", "Dark"], index=0 if st.session_state.theme_mode == "Light" else 1)
     apply_theme(st.session_state.theme_mode)
 
+    st.markdown("---")
+    openai_api_key = st.text_input("OpenAI API Key", type="password", help="Enter your OpenAI API key to power the medical assistant.")
+
     selected_model = st.selectbox("Model", MODEL_OPTIONS, index=MODEL_OPTIONS.index(DEFAULT_MODEL))
     cache_mode = st.selectbox("Caching Strategy", ["None", "InMemory", "SQLite"])
     selected_language = st.selectbox("Language", LANGUAGE_OPTIONS, index=0)
@@ -106,6 +109,8 @@ if submit_btn:
         st.error("Please enter your age.")
     elif gender == "Select" or duration == "Select":
         st.error("Please select gender and duration.")
+    elif not openai_api_key or not openai_api_key.startswith("sk-"):
+        st.error("Please provide a valid OpenAI API key in the sidebar.")
     else:
         st.info("Analyzing symptoms... Please wait.")
         
@@ -128,7 +133,7 @@ if submit_btn:
         }
         
         # Initialize Model
-        llm = get_llm(model_name=selected_model)
+        llm = get_llm(model_name=selected_model, api_key=openai_api_key)
         
         # Streaming Output Container
         st.subheader("Guidance Narrative")
@@ -200,4 +205,4 @@ if submit_btn:
 
         except Exception as e:
             st.error(f"An error occurred during assessment: {str(e)}")
-            st.error("Please ensure your OPENAI_API_KEY is correctly set in the .env file.")
+            st.error("Please ensure your OpenAI API key is correct and has sufficient quota.")
