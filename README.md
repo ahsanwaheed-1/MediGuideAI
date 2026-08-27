@@ -2,7 +2,7 @@
 
 ### DEPLOYED LINK STREAMLIT LINK:
 
-https://mediguideai-s8ayb4z9xafixtu8thh5xe.streamlit.app/
+https://realmediguideai.streamlit.app/
 
 "AI-Powered Medical Symptom Assessment and Patient Guidance Assistant"
 
